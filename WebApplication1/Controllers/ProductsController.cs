@@ -11,10 +11,25 @@ namespace WebApplication1.Controllers
     public class ProductsController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<ProductDto> GetAllProducts()
+        public ActionResult<IEnumerable<ProductDto>> GetAllProducts()
         {
             var products = ProductDB.ProductList;
-            return products;
+            return Ok(products);
+        }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<ProductDto> GetProduct(int id)
+        {
+            if ( id == 0)
+            {
+                return BadRequest();
+            }
+            var product = ProductDB.ProductList.FirstOrDefault(P => P.Id == id);
+            if ( product == null )
+            {
+                return NotFound();
+            }
+            return Ok();
         }
     }
 }
