@@ -18,6 +18,9 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public ActionResult<ProductDto> GetProduct(int id)
         {
             if ( id == 0)
@@ -29,7 +32,7 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok(product);
         }
     }
 }
