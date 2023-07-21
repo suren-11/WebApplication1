@@ -47,6 +47,12 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest(productDto);
             }
+            if(ProductDB.ProductList.Any(P => P.Name == productDto.Name))
+            {
+                ModelState.AddModelError("CustomError", "Product Already Exists");
+                return BadRequest(ModelState);
+            }
+
             if (productDto.Id > 0)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
