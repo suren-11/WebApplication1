@@ -37,11 +37,12 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ProductDto> CreateProduct([FromBody]ProductDto productDto)
         {
+           
             if (productDto == null)
             {
                 return BadRequest(productDto);
