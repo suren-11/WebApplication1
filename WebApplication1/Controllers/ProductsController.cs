@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Data;
 using WebApplication1.Models;
@@ -63,6 +64,24 @@ namespace WebApplication1.Controllers
 
             ProductDB.ProductList.Add(productDto);
             return CreatedAtRoute("GetProduct", new { id = productDto.Id}, productDto);
+        }
+
+        [HttpDelete("{id:int}", Name = "DeleteProduct")]
+        public IActionResult DeleteProduct(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            var product = ProductDB.ProductList.FirstOrDefault(P => P.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ProductDB.ProductList.Remove(product);
+            return NoContent();
+
         }
     }
 }
