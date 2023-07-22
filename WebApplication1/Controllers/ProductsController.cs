@@ -87,5 +87,21 @@ namespace WebApplication1.Controllers
             return NoContent();
 
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult UpdateProduct(int id, [FromBody]ProductDto productDto)
+        {
+            if(productDto == null || id != productDto.Id) 
+            {
+                return BadRequest();
+            }
+
+            var product = ProductDB.ProductList.FirstOrDefault(P => P.Id == id);
+            product.Name = productDto.Name;
+            product.Qty = productDto.Qty;
+            return NoContent();
+        }
     }
 }
