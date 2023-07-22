@@ -67,6 +67,10 @@ namespace WebApplication1.Controllers
         }
 
         [HttpDelete("{id:int}", Name = "DeleteProduct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public IActionResult DeleteProduct(int id)
         {
             if (id == 0)

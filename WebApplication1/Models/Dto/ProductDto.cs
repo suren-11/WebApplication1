@@ -9,5 +9,7 @@ namespace WebApplication1.Models.Dto
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
+
+        public int Qty { get; set; }
     }
 }
