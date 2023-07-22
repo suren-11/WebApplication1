@@ -88,7 +88,7 @@ namespace WebApplication1.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}",Name = "UpdateProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult UpdateProduct(int id, [FromBody]ProductDto productDto)
