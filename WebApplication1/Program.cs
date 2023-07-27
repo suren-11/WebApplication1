@@ -1,7 +1,9 @@
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File("log/productsLogs.txt",rollingInterval: RollingInterval.Minute).CreateLogger();
 builder.Services.AddControllers(option => { 
     option.ReturnHttpNotAcceptable = true;
 }).AddXmlDataContractSerializerFormatters();

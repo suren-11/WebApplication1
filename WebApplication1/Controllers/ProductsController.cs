@@ -39,6 +39,7 @@ namespace WebApplication1.Controllers
             var product = ProductDB.ProductList.FirstOrDefault(P => P.Id == id);
             if ( product == null )
             {
+                logger.LogWarning("Product not found");
                 return NotFound();
             }
             return Ok(product);
