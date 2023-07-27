@@ -1,9 +1,11 @@
-using Serilog;
+
+
+using WebApplication1.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File("log/productsLogs.txt",rollingInterval: RollingInterval.Minute).CreateLogger();
+
 builder.Services.AddControllers(option => { 
     option.ReturnHttpNotAcceptable = true;
 }).AddXmlDataContractSerializerFormatters();
@@ -11,7 +13,7 @@ builder.Services.AddControllers(option => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Host.UseSerilog();
+builder.Services.AddSingleton< ILogging, LoggingV2 >();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
