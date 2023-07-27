@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Data;
+using WebApplication1.Logging;
 using WebApplication1.Models;
 using WebApplication1.Models.Dto;
 
@@ -11,16 +12,16 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly ILogger<ProductsController> logger;
-        public ProductsController(ILogger<ProductsController> _logger)
+        private readonly ILogging _logger;
+        public ProductsController(ILogging logger)
         {
-            logger = _logger;
+            _logger = logger;
         }
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<ProductDto>> GetAllProducts()
         {
-            logger.LogInformation("Get all products");
+            _logger.Log("Get all products","");
             var products = ProductDB.ProductList;
             return Ok(products);
         }
@@ -33,13 +34,13 @@ namespace WebApplication1.Controllers
         {
             if ( id == 0)
             {
-                logger.LogError("ID 0");
+                _logger.Log("ID 0", "error");
                 return BadRequest();
             }
             var product = ProductDB.ProductList.FirstOrDefault(P => P.Id == id);
             if ( product == null )
             {
-                logger.LogWarning("Product not found");
+                //logger.LogWarning("Product not found");
                 return NotFound();
             }
             return Ok(product);
