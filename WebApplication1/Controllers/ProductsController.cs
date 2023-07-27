@@ -11,10 +11,16 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly ILogger<ProductsController> logger;
+        public ProductsController(ILogger<ProductsController> _logger)
+        {
+            logger = _logger;
+        }
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<ProductDto>> GetAllProducts()
         {
+            logger.LogInformation("Get all products");
             var products = ProductDB.ProductList;
             return Ok(products);
         }
@@ -27,6 +33,7 @@ namespace WebApplication1.Controllers
         {
             if ( id == 0)
             {
+                logger.LogError("ID 0");
                 return BadRequest();
             }
             var product = ProductDB.ProductList.FirstOrDefault(P => P.Id == id);
